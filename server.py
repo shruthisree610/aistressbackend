@@ -19,10 +19,22 @@ from models import make_user
 
 app = FastAPI(title="Nivara API")
 
+_raw_cors = os.environ.get("CORS_ORIGINS", "")
+_parsed_cors = [o.strip() for o in _raw_cors.split(",") if o.strip() and o.strip() != "*"]
+_explicit_origins = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "https://aistressfrontend.vercel.app",
+]
+_cors_origins = list(dict.fromkeys(_parsed_cors + _explicit_origins))
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=os.environ.get("CORS_ORIGINS", "*").split(","),
+    allow_origins=_cors_origins,
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_methods=["*"],
     allow_headers=["*"],
 )
