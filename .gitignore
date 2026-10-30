@@ -1,0 +1,19 @@
+# Backend environment and secrets
+.env
+.env.*
+!.env.example
+
+# Python cache & artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# Pytest & test caches
+.pytest_cache/
+.coverage
+htmlcov/
